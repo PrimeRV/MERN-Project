@@ -1,0 +1,21 @@
+.card {
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow: hidden;
+    background: white;
+  }
+  
+
+/* .card {
+    position: relative;
+    margin: 0 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 15px;
+    padding: 1rem;
+    overflow: hidden;
+    background: #292929;
+    color: white;
+    transition: background 0.3s ease, color 0.3s ease;
+} */

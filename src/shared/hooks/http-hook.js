@@ -1,0 +1,64 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+export const useHttpClient = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+
+    const activeHttpRequests = useRef([]);
+
+    const sendRequest = useCallback(
+        async (url, method = 'GET', body = null, headers = {}) => {
+        setIsLoading(true);
+        const httpAbortCtrl = new AbortController();
+        activeHttpRequests.current.push(httpAbortCtrl);
+
+        try {
+            const response = await fetch(url, {
+            method,
+            body,
+            headers,
+            signal: httpAbortCtrl.signal
+            });
+
+            const responseData = await response.json();
+
+            activeHttpRequests.current = activeHttpRequests.current.filter(
+            reqCtrl => reqCtrl !== httpAbortCtrl
+            );
+
+            if (!response.ok) {
+            throw new Error(responseData.message);
+            }
+
+            setIsLoading(false);
+            return responseData;
+        }  catch (err) {
+            activeHttpRequests.current = activeHttpRequests.current.filter(
+                reqCtrl => reqCtrl !== httpAbortCtrl
+            );
+        
+            if (err.name === 'AbortError') {
+                console.log('Request aborted intentionally'); // Log for debugging
+                return; // Simply exit if the error is due to aborting
+            }
+        
+            setError(err.message);
+            setIsLoading(false);
+            throw err; // Rethrow other types of errors
+        }
+    },
+    []
+);
+
+const clearError = () => {
+    setError(null);
+};
+
+useEffect(() => {
+    return () => {
+    activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abort());
+    };
+}, []);
+
+return { isLoading, error, sendRequest, clearError };
+};

@@ -1,0 +1,62 @@
+/* UserItem Container */
+.user-item {
+  margin: 1rem;
+  width: calc(45% - 2rem);
+  min-width: 17.5rem;
+  list-style: none; /* Removes default bullet points */
+}
+
+/* Card Container */
+.user-item_content {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #292929;
+  border-radius: 8px; /* Slight rounded corners */
+  transition: background 0.3s ease;
+}
+
+.user-item_content:hover {
+  background: #ffd900; /* Highlight on hover */
+}
+
+/* Image Container */
+.user-item_image {
+  flex-shrink: 0;
+  width: 4rem; /* Set a fixed size for the circle */
+  height: 4rem;
+  border-radius: 50%; /* Makes it circular */
+  overflow: hidden; /* Ensures no image overflow */
+  border: 2px solid #ffd900; /* Optional: A highlight border */
+  margin-right: 1.5rem; /* Space between image and text */
+}
+
+/* Ensures the image fills the container */
+.user-item_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Prevents image distortion */
+}
+
+/* Info Container */
+.user-item_info h2 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ffd900;
+  transition: color 0.3s ease;
+}
+
+.user-item_info h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #e0e0e0;
+  transition: color 0.3s ease;
+}
+
+/* Hover effects */
+.user-item_content:hover h2,
+.user-item_content:hover h3 {
+  color: #292929; /* Text changes to dark on hover */
+}
+
